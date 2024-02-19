@@ -201,6 +201,8 @@ model Survey {
   webResponded Int     @default(0)
   webCommented Int     @default(0)
 
+  isRecurrent Int
+
   userId String
   user   User   @relation(fields: [userId], references: [id])
 
