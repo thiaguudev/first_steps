@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { useMessages, NextIntlClientProvider } from "next-intl";
 import { Analytics } from "@vercel/analytics/react";
@@ -7,8 +8,8 @@ import { fontSans } from "@/config/fonts";
 import Chat from "@/components/Chat";
 import HotJar from "@/components/HotJar";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import "../globals.css";
 import SessionProvider from "@/components/SessionProvider";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 type RootLayoutProps = Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
   params: { locale: string };
 }>;
 

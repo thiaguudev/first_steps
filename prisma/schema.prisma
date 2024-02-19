@@ -15,7 +15,6 @@ datasource db {
 
 model Account {
   id                String  @id @default(uuid())
-  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -27,7 +26,8 @@ model Account {
   id_token          String?
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -35,32 +35,10 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-
-  customerId    String?        @unique
-  subscription  Subscription?
-  surveys       Survey[]
-  notifications Notification[]
-  NPS           NPS
-  CES           CES
-  CSAT          CSAT
-  Stars         Stars
-  Smiley        Smiley
-  ENPS          ENPS
-  Thumb         Thumb
-  PMF           PMF
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -81,48 +59,52 @@ model Plan {
 
 model Subscription {
   id                   String   @id @default(uuid())
-  subscritiptionId     String   @unique
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
-  planId               String?
-  plan                 Plan?    @relation(fields: [planId], references: [id])
-  currentPeriodEndDate DateTime
+  subscritiptionId     String   @unique
+  currentPeriodEndDate DateTime // data of end of plan
   active               Boolean  @default(false)
+
+  planId String?
+  plan   Plan?   @relation(fields: [planId], references: [id])
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
+  teamId String @unique
+  Team   Team?
+
   @@index([userId])
 }
 
-// Survey type: (NPS | 5-Stars | CSAT | CES | Smileys | eNPS | Thumbs | PMF)
+model Team {
+  id   String @id @default(uuid())
+  name String
 
-model Survey {
-  id                   String     @id @default(uuid())
-  createdAt            DateTime   @default(now())
-  updatedAt            DateTime   @updatedAt
-  title                String // title of survey
-  isAnonymous          Boolean // if survey is anonymous or no
-  status               String // sketch | test | inactive | active  
-  onMobile             Boolean // show in mobile
-  apresentationMessage String // require Plan Plus or more
-  limit                Int // limit of responses
-  image                String // url for image # require Plan Plus or more
-  userId               String
-  user                 User       @relation(fields: [userId], references: [id])
-  responses            Response[]
-  questions            Question[]
+  user User[]
 
-  timeToShow Int // seconds for the user to see the survey 
+  subscriptionId String?       @unique
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
 }
 
-model Question {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  text      String
-  surveyId  String
-  survey    Survey   @relation(fields: [surveyId], references: [id])
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  teamId String?
+  team   Team?   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  customerId   String?       @unique
+  subscription Subscription?
+
+  notifications Notification[]
+
+  surveys Survey[]
 }
 
 model Contact {
@@ -137,121 +119,90 @@ model Contact {
   responses   Response[]
 }
 
-model Response {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  comment   String?
-  surveyId  String
-  survey    Survey   @relation(fields: [surveyId], references: [id])
-  contactId String?
-  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
-}
-
-// Email | Web | SMS | Link/QRCode
-
-// Email:  (Sent | Open | Responded | Commented)
-//              Throttled | Bounced | Unsubscribed
-
-// Web: (Shown | Responded | Commented)
-
-// SMS: (Sent | Responded | Commented)
-//            Throttled
-
-// Link: (Shown | Responded | Commented)
-
-model Channel {
-  id String @id @default(uuid())
-}
-
-model Configuration {
-  id String @id @default(uuid())
-}
-
 model Notification {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   read      Boolean
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
 }
 
-model Workflow {
+model Flow {
   id    String @id @default(uuid())
   title String
+
+  surveyId String
+  survey   Survey @relation(fields: [surveyId], references: [id], onDelete: Cascade)
 }
 
-model Metrics {
-  id String @id @default(uuid())
+model Response {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  comment String?
+  score   Int
+
+  surveyId String
+  survey   Survey @relation(fields: [surveyId], references: [id])
+
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  channel String // Email / SMS / Web / Link/QrCode
 }
 
-model NPS {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+model Survey {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-model CES {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  type           String // NPS / CES / CSAT / 5-Stars / Smileys / eNPS / Thumbs / PMF 
+  title          String // title of survey
+  isAnonymous    Boolean    @default(true) // if survey is anonymous or no
+  status         String // sketch | test | inactive | active  
+  onMobile       Boolean // if survey is visible on mobile
+  welcomeMessage String // require Plan Plus or more
+  skipComment    Boolean    @default(false) // if skip comment in survey
+  commentMessage String // require Plan Plus or more
+  limit          Int // limit of responses
+  image          String // url for image # require Plan Plus or more
+  responses      Response[]
+  question       String
+  language       String // language of survey (pt-BR/en)
+  timeToShow     Int        @default(2) // seconds for the user to see the survey 
 
-model CSAT {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  emailChannel      Boolean @default(false) // survey uses a email channel
+  emailSent         Int     @default(0)
+  emailOpen         Int     @default(0)
+  emailResponded    Int     @default(0)
+  emailCommented    Int     @default(0)
+  emailThrottled    Int     @default(0)
+  emailBounced      Int     @default(0)
+  emailUnsubscribed Int     @default(0)
 
-model Stars {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  emailFrom    String
+  replyTo      String
+  emailSubject String
 
-model Smiley {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  linkChannel   Boolean @default(false) // survey uses a link channel
+  linkShown     Int     @default(0)
+  linkResponded Int     @default(0)
+  linkCommented Int     @default(0)
 
-model ENPS {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  smsChannel   Boolean @default(false) // survey uses a sms channel
+  smsSent      Int     @default(0)
+  smsShown     Int     @default(0)
+  smsCommented Int     @default(0)
+  smsThrottled Int     @default(0)
 
-model Thumb {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
-}
+  webChannel   Boolean @default(false) // survey uses a web channel
+  webShown     Int     @default(0)
+  webResponded Int     @default(0)
+  webCommented Int     @default(0)
 
-model PMF {
-  id                   String @id @default(uuid())
-  userId               String @unique
-  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  apresentationMessage String
-  buttonStyle          String
-  buttonShape          String
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  flows Flow[]
 }

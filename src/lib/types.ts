@@ -1,3 +1,7 @@
+export type ChannelType = 'email' | 'web' | 'sms' | 'link';
+
+export type SurveyType = 'nps' | 'ces' | 'csat' | '5-star' | 'smileys' | 'thumbs' | 'pmf';
+
 export type Locale = "pt" | "en" | "es";
 
 export type Address = {

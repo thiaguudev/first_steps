@@ -8,7 +8,7 @@ type AppLayoutProps = {
 
 export default async function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div className="flex">
+    <div className="w-screen h-screen mt-3">
       <SideNav />
       {children}
     </div>
