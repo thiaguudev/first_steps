@@ -11,5 +11,5 @@ export default function ButtonSignOut() {
 
   const handleSignOut = () => signOut({ callbackUrl: `/${locale}/sign-in` });
 
-  return <Button onClick={handleSignOut}>{t("signOut")}</Button>;
+  return <Button onClick={handleSignOut} variant="destructive">{t("signOut")}</Button>;
 }

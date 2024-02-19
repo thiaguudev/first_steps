@@ -6,8 +6,4 @@ export const config = {
   matcher: ["/", "/(pt|en|es)/:path*"],
 };
 
-export default createMiddleware({
-  locales,
-  localePrefix,
-  defaultLocale,
-});
+export default createMiddleware({ locales, localePrefix, defaultLocale });

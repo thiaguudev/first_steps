@@ -1,18 +1,5 @@
 import { z } from "zod";
 
-export const userAuth = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-export type UserAuth = z.infer<typeof userAuth>;
-
-export const userAuthRecoveryPassword = z.object({
-  email: z.string().email(),
-});
-
-export type UserAuthRecoveryPassword = z.infer<typeof userAuthRecoveryPassword>;
-
 export const customerStripe = z.object({
   email: z.string().email(),
   name: z.string(),

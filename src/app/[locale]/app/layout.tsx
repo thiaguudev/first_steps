@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 
-import UserNav from "@/components/UserNav";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import PlansList from "@/components/Plans";
+import SideNav from "@/components/SideNav";
 
 type AppLayoutProps = {
   children: ReactNode;
@@ -10,10 +8,8 @@ type AppLayoutProps = {
 
 export default async function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div>
-      <ThemeSwitcher />
-      <UserNav />
-      <PlansList />
+    <div className="flex">
+      <SideNav />
       {children}
     </div>
   );

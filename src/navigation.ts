@@ -1,4 +1,5 @@
 import { createSharedPathnamesNavigation } from "next-intl/navigation";
+
 import { Locale } from "@/lib/types";
 
 export const locales: Locale[] = ["en", "pt", "es"] as const;

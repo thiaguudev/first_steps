@@ -1,3 +1,9 @@
+// Survey (NPS | 5-Stars | CSAT | CES | Smileys | eNPS | Thumbs | PMF)
+// Platform (Web | Email | SMS | Link/QrCode)
+// Customization Button Style  (Fill | Outline) | Button Shape (Rounded, Square, Full Rounded)
+// People
+// Finish
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -43,8 +49,18 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  customerId   String?       @unique
-  Subscription Subscription?
+  customerId    String?        @unique
+  subscription  Subscription?
+  surveys       Survey[]
+  notifications Notification[]
+  NPS           NPS
+  CES           CES
+  CSAT          CSAT
+  Stars         Stars
+  Smiley        Smiley
+  ENPS          ENPS
+  Thumb         Thumb
+  PMF           PMF
 }
 
 model VerificationToken {
@@ -79,8 +95,163 @@ model Subscription {
   @@index([userId])
 }
 
+// Survey type: (NPS | 5-Stars | CSAT | CES | Smileys | eNPS | Thumbs | PMF)
+
 model Survey {
-  id     String @id @default(uuid())
-  title  String
-  userId String
+  id                   String     @id @default(uuid())
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+  title                String // title of survey
+  isAnonymous          Boolean // if survey is anonymous or no
+  status               String // sketch | test | inactive | active  
+  onMobile             Boolean // show in mobile
+  apresentationMessage String // require Plan Plus or more
+  limit                Int // limit of responses
+  image                String // url for image # require Plan Plus or more
+  userId               String
+  user                 User       @relation(fields: [userId], references: [id])
+  responses            Response[]
+  questions            Question[]
+
+  timeToShow Int // seconds for the user to see the survey 
+}
+
+model Question {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  text      String
+  surveyId  String
+  survey    Survey   @relation(fields: [surveyId], references: [id])
+}
+
+model Contact {
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  name        String
+  email       String?
+  phoneNumber String?
+  country     String?
+  state       String?
+  responses   Response[]
+}
+
+model Response {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  comment   String?
+  surveyId  String
+  survey    Survey   @relation(fields: [surveyId], references: [id])
+  contactId String?
+  contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+}
+
+// Email | Web | SMS | Link/QRCode
+
+// Email:  (Sent | Open | Responded | Commented)
+//              Throttled | Bounced | Unsubscribed
+
+// Web: (Shown | Responded | Commented)
+
+// SMS: (Sent | Responded | Commented)
+//            Throttled
+
+// Link: (Shown | Responded | Commented)
+
+model Channel {
+  id String @id @default(uuid())
+}
+
+model Configuration {
+  id String @id @default(uuid())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  read      Boolean
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Workflow {
+  id    String @id @default(uuid())
+  title String
+}
+
+model Metrics {
+  id String @id @default(uuid())
+}
+
+model NPS {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model CES {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model CSAT {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model Stars {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model Smiley {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model ENPS {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model Thumb {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
+}
+
+model PMF {
+  id                   String @id @default(uuid())
+  userId               String @unique
+  user                 User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apresentationMessage String
+  buttonStyle          String
+  buttonShape          String
 }

@@ -8,6 +8,7 @@ import Chat from "@/components/Chat";
 import HotJar from "@/components/HotJar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "../globals.css";
+import SessionProvider from "@/components/SessionProvider";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -35,7 +36,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <SessionProvider>{children}</SessionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
         <Chat />

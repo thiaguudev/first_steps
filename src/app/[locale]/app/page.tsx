@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/toaster";
 function AppPage() {
   return (
     <div>
-      AppPage
       <Toaster />
     </div>
   );
