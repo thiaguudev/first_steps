@@ -208,5 +208,9 @@ model Feedback {
   invitationMessage String
   mainQuestion      String
 
-  emailRequest Boolean @default(false)
+  emailRequest  Boolean @default(false)
+  thanksMessage String
+  isAllUsers    Boolean @default(true)
+
+  trafficCoverage Int @default(100)
 }
