@@ -1,15 +1,14 @@
-import { env } from "@/lib/env";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   const survey = {
-    image: 'https://www.voxco.com/wp-content/uploads/2021/04/students-feedback-survey-cvr.jpg.webp',
-    question: 'How likely are you to recommend Survey Apoli to a friend?'
-  }
+    image:
+      "https://www.voxco.com/wp-content/uploads/2021/04/students-feedback-survey-cvr.jpg.webp",
+    question: "How likely are you to recommend Survey Apoli to a friend?",
+  };
 
-  console.log(env.VERCEL_URL)
-
-  return new NextResponse(`
+  return new NextResponse(
+    `
     <html>
       <head>
         <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +25,7 @@ export async function GET() {
       <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
       <div class="mx-auto w-full max-w-lg">
         <div class="flex justify-center mb-3">
-          <img src=${survey.image} alt="" class="w-16 h-16" />  
+          <!--<img src=${survey.image} alt="" class="w-16 h-16" />  -->
         </div>
         <form action="http://localhost:3000/api/survey" method="post" id="npsform">
           <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
@@ -144,7 +143,8 @@ export async function GET() {
     </script>
     </html>
   `,
-    { headers: { 'content-type': 'text/html' } })
+    { headers: { "content-type": "text/html" } }
+  );
 }
 
 /*
@@ -156,11 +156,11 @@ export async function GET() {
           var t=Array.prototype.slice.call(arguments);
           a.push([e,t])}}(c)
       }
-      a.SNIPPET_VERSION="1.0.1";
-      var o=t.createElement("script");
-      o.type="text/javascript",
-      o.async=!0,
-      o.src="https://d2yyd1h5u9mauk.cloudfront.net/integrations/web/v1/library/"+r+"/"+n+".js";
+      a.SNIPPET_VERSION = "1.0.1";
+      var o = t.createElement("script");
+      o.type = "text/javascript",
+      o.async = !0,
+      o.src = "https://d2yyd1h5u9mauk.cloudfront.net/integrations/web/v1/library/" + r + "/" + n + ".js";
       var p=t.getElementsByTagName("script")[0];
       p.parentNode.insertBefore(o,p)}}(window,document,"yqJnvhYQAXIDC17Y","delighted");
 */

@@ -1,9 +1,3 @@
-// Survey (NPS | 5-Stars | CSAT | CES | Smileys | eNPS | Thumbs | PMF)
-// Platform (Web | Email | SMS | Link/QrCode)
-// Customization Button Style  (Fill | Outline) | Button Shape (Rounded, Square, Full Rounded)
-// People
-// Finish
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -207,4 +201,12 @@ model Survey {
   user   User   @relation(fields: [userId], references: [id])
 
   flows Flow[]
+}
+
+model Feedback {
+  id                String @id @default(uuid())
+  invitationMessage String
+  mainQuestion      String
+
+  emailRequest Boolean @default(false)
 }
