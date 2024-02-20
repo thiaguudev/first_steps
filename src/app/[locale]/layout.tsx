@@ -70,10 +70,17 @@ export default function RootLayout({
                   p.parentNode.insertBefore(o,p)}}(window,document,"BacF9eMb6mIWPbJR","delighted");`}
 
         {`
-          (function (s, u, r, v, e, y) {
-            
+          (function (w, d, a, n) {
+            if (!w[n]) {
+              const script = d.createElement('script');
+              script.SNIPPET_VERSION = '0.0.1';
+              script.type = 'text/javascript';
+              script.async = !0;
+              script.scr = '';
+              const p = d.getElementsByTagName('script')[0];
+              p.parentNode.insertBefore(o, p);
+            }
           })(window, document, '123456789', 'survey.apoli')
-          console.log(window);
         `}
       </Script>
     </html>
