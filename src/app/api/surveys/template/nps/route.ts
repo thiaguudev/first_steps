@@ -2,9 +2,13 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const survey = {
+    accessKey: "",
     image:
       "https://www.voxco.com/wp-content/uploads/2021/04/students-feedback-survey-cvr.jpg.webp",
     question: "How likely are you to recommend Survey Apoli to a friend?",
+    leftLabel: "Less Likely",
+    rightLabel: "Very Likely",
+    commentMessage: "Can you tell us a bit more about your score?",
   };
 
   return new NextResponse(
@@ -27,8 +31,8 @@ export async function GET() {
         <div class="flex justify-center mb-3">
           <!--<img src=${survey.image} alt="" class="w-16 h-16" />  -->
         </div>
-        <form action="http://localhost:3000/api/survey" method="post" id="npsform">
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+        <form action="http://localhost:3000/api/surveys" method="post" id="npsform">
+          <input type="hidden" name="access_key" value=${survey.accessKey}>
           <div class="step" id="step1">
             <h2 class="mx-auto max-w-xs text-center text-xl font-bold">
               ${survey.question}
@@ -83,14 +87,14 @@ export async function GET() {
               </div>
             </div>
             <div class="flex justify-between mt-2 text-gray-500 text-sm">
-              <span>Less Likely</span>
-              <span>Very Likely</span>
+              <span>${survey.leftLabel}</span>
+              <span>${survey.rightLabel}</span>
             </div>
           </div>
     
           <div class="step hidden" id="step2">
             <h2 class="mx-auto text-center text-xl font-bold">
-              Can you tell us a bit more about your score?
+              ${survey.commentMessage}
             </h2>
     
             <div class="mt-4">

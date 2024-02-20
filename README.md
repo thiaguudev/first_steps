@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Surveys
 
-## Getting Started
+## NPS [https://rockcontent.com/br/blog/nps] [OK]
 
-First, run the development server:
+- [`Benefícios do NPS`](https://rockcontent.com/br/blog/beneficios-do-nps-para-a-sua-agencia)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## CES [https://rockcontent.com/br/blog/ces] [OK]
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## CSAT [https://rockcontent.com/br/blog/csat] [OK]
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## PMF [https://rockcontent.com/br/blog/product-market-fit] []
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Smileys []
 
-## Learn More
+## Thumbs [OK]
 
-To learn more about Next.js, take a look at the following resources:
+# Integrations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## [webhooks] (https://bharathvaj.me/blog/implement-webhook-nextjs)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## [hubspot](https://developers.hubspot.com)
 
-## Deploy on Vercel
+## [rdstation](https://developers.rdstation.com)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## [slack](https://slack.com/intl/pt-br/integrations)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## [stripe] (https://docs.stripe.com/api)
+
+## [g2] (https://documentation.g2.com/docs)
+
+## [zapier] (https://zapier.com/developer-platform)
+
+## [`google sheets`] (https://developers.google.com/sheets?hl=pt-br)
+
+## [freshdesk] (https://developers.freshworks.com)
+
+# Flows
+
+## create a schema on table
+
+# Features
+
+## customize fonts on the surveys
+
+## customize colors on the surveys
+
+## create templates to surveys

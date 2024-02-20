@@ -2,9 +2,17 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const survey = {
+    accessKey: "",
     image:
       "https://www.voxco.com/wp-content/uploads/2021/04/students-feedback-survey-cvr.jpg.webp",
     question: "How likely are you to recommend Survey Apoli to a friend?",
+    leftLabel: "Less Likely",
+    rightLabel: "Very Likely",
+    commentMessage: "Can you tell us a bit more about your score?",
+    buttonStyle: "outline",
+    buttonShape: "rounded-md",
+    textColor: "text-black",
+    bgColor: "bg-white"
   };
 
   return new NextResponse(
@@ -34,40 +42,40 @@ export async function GET() {
               ${survey.question}
             </h2>
             <div class="mt-4 flex gap-5 justify-center">
-              <div class="grow w-full">
+              <div class="grow">
                 <input type="radio" id="one" name="ces" value="1" class="navigate peer hidden" data-step="2" />
-                <label for="one" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border bg-white text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">1</label>
+                <label for="one" class="${survey.bgColor} ${survey.textColor} flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape} border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">1</label>
               </div>
     
-              <div class="grow w-full">
+              <div class="grow">
                 <input type="radio" id="two" name="ces" value="2" class="navigate peer hidden" data-step="2" />
-                <label for="two" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border bg-white text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">2</label>
+                <label for="two" class="${survey.bgColor} ${survey.textColor} flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape} border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">2</label>
               </div>
     
-              <div class="grow w-full">
+              <div class="grow">
                 <input type="radio" id="three" name="ces" value="3" class="navigate peer hidden" data-step="2" />
-                <label for="three" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border bg-white text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">3</label>
+                <label for="three" class="${survey.bgColor} ${survey.bgColor} ${survey.textColor} flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape} border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">3</label>
               </div>
 
-              <div class="grow w-full">
+              <div class="grow">
                 <input type="radio" id="four" name="ces" value="4" class="navigate peer hidden" data-step="2" />
-                <label for="four" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border bg-white text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">4</label>
+                <label for="four" class="${survey.bgColor} ${survey.textColor} flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape} border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">4</label>
               </div>
 
-              <div class="grow w-full">
+              <div class="grow">
                 <input type="radio" id="five" name="ces" value="5" class="navigate peer hidden" data-step="2" />
-                <label for="five" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-md border bg-white text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">5</label>
+                <label for="five" class="${survey.bgColor} ${survey.textColor} flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape} border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">5</label>
               </div>
             </div>
             <div class="flex justify-between mt-2 text-gray-500 text-sm">
-              <span>Less Likely</span>
-              <span>Very Likely</span>
+              <span>${survey.leftLabel}</span>
+              <span>${survey.rightLabel}</span>
             </div>
           </div>
     
           <div class="step hidden" id="step2">
             <h2 class="mx-auto text-center text-xl font-bold">
-              Can you tell us a bit more about your score?
+              ${survey.commentMessage}
             </h2>
     
             <div class="mt-4">
