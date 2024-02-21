@@ -9,9 +9,11 @@ async function track() {
 }
 
 async function main() {
+  const survey = await track()
+  const queryString = new URLSearchParams(survey).toString()
   const iframe = window.document.createElement("iframe");
   iframe.name = "frame";
-  iframe.src = "http://localhost:3000/api/surveys/template/smileys?bgColor=bg-green-500&textColor=text-white";
+  iframe.src = `http://localhost:3000/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
   iframe.frameBorder = "0";
   iframe.height = 350;
@@ -23,9 +25,6 @@ async function main() {
   iframe.style.zIndex = 9999;
 
   window.document.body.appendChild(iframe);
-
-  const data = await track()
-  console.log(data);
 
   const frame = window.frames["frame"];
 

@@ -3,8 +3,11 @@ import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 
 export async function GET(req: NextRequest) {
-  const survey = {}
-  return NextResponse.json({ error: false })
+  const survey = {
+    textColor: 'text-white',
+    bgColor: 'bg-green-500'
+  }
+  return NextResponse.json(survey)
 }
 
 export async function POST(req: NextRequest) {
