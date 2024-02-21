@@ -65,7 +65,7 @@ model Subscription {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
-  teamId String @unique
+  teamId String? @unique
   Team   Team?
 
   @@index([userId])

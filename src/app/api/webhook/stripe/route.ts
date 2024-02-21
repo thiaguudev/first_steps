@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
       const user = await prisma.user.findUnique({
         where: { customerId: session.customer },
-        include: { Subscription: true }
+        include: { subscription: true }
       })
 
       if (!user) throw new Error('User not exists');
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       switch (event.type) {
         case "customer.subscription.deleted": {
           await prisma.subscription.update({
-            where: { subscritiptionId: user?.Subscription?.subscritiptionId },
+            where: { subscritiptionId: user?.subscription?.subscritiptionId },
             data: { active: false }
           })
         }
@@ -53,9 +53,9 @@ export async function POST(req: Request) {
 
             if (!plan) throw new Error('Plan not exists')
 
-            if (user.Subscription) {
+            if (user.subscription) {
               await prisma.subscription.update({
-                where: { subscritiptionId: user?.Subscription?.subscritiptionId },
+                where: { subscritiptionId: user?.subscription?.subscritiptionId },
                 data: {
                   currentPeriodEndDate: new Date(session.current_period_end * 1000),
                   active: true,
