@@ -2,7 +2,6 @@ const BASE_URL = "http://localhost:3000";
 
 function __createIframe(queryString) {
   const iframe = window.document.createElement("iframe");
-
   iframe.name = "frame";
   iframe.src = `${BASE_URL}/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
@@ -18,6 +17,13 @@ function __createIframe(queryString) {
   window.document.body.appendChild(iframe);
 
   return window.frames["frame"];
+}
+
+async function __send(body) {
+  return fetch(`${BASE_URL}/api/surveys`, {
+    method: "POST",
+    body,
+  });
 }
 
 async function __identify() {
@@ -40,15 +46,36 @@ async function main() {
   frame.addEventListener("DOMContentLoaded", (event) => {
     const form = frame.document.getElementById("npsform");
 
-    frame.document.getElementsByName("score").forEach((el) => {
-      console.log(el);
-    });
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    if (survey.hasConfirmButton) {
+      const button = form.querySelector('button[type="button"]');
 
       if (survey.skipComment) {
+        button.setAttribute("type", "submit");
+        button.setAttribute("data-step", "thanks");
+      } else {
+        button.setAttribute("data-step", "comment");
       }
+    } else {
+      frame.document.getElementsByName("score").forEach((el) => {
+        el.setAttribute("data-step", survey.skipComment ? "thanks" : "comment");
+      });
+
+      if (survey.skipComment) {
+        form.querySelectorAll('input[name="score"]').forEach((el) => {
+          el.addEventListener("change", async () => {
+            const response = await __send(new FormData(form));
+            const data = await response.json();
+            console.log("result2", data);
+          });
+        });
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const response = await __send(new FormData(form));
+      const data = await response.json();
+      console.log("result1", data);
     });
 
     /**
@@ -56,28 +83,24 @@ async function main() {
      */
     form.querySelectorAll(".navigate").forEach((nav) => {
       nav.addEventListener("click", () => {
-        if (survey.hasConfirmButton) return;
-
-        const stepNumber = parseInt(nav.getAttribute("data-step"));
-        navigateToFormStep(stepNumber);
+        const step = nav.getAttribute("data-step");
+        if (!step) return;
+        navigateToFormStep(step);
       });
     });
 
     /**
      * Multi-step function to navigate
      */
-    const navigateToFormStep = (stepNumber) => {
+    const navigateToFormStep = (step) => {
       form.querySelectorAll(".step").forEach((el) => {
         el.classList.add("hidden");
       });
 
-      if (!form.querySelector("#step" + stepNumber)) {
-        if (survey.thanksMessage) {
-          const thanks = frame.document.getElementById("thanks");
-          thanks.classList.remove("hidden");
-        }
-      } else {
-        form.querySelector("#step" + stepNumber).classList.remove("hidden");
+      if (form.querySelector("#step-" + step)) {
+        form.querySelector("#step-" + step).classList.remove("hidden");
+
+        if (step === "comment") form.querySelector("textarea").focus();
       }
     };
   });

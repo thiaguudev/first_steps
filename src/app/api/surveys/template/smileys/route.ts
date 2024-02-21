@@ -10,11 +10,12 @@ export async function GET(req: NextRequest) {
   const buttonShape = req.nextUrl.searchParams.get("buttonShape");
   const textColor = req.nextUrl.searchParams.get("textColor");
   const bgColor = req.nextUrl.searchParams.get("bgColor");
-  const skipComment = req.nextUrl.searchParams.get("image");
+  const skipComment = req.nextUrl.searchParams.get("skipComment") === 'true';
   const thanksMessage = req.nextUrl.searchParams.get("thanksMessage");
+  const hasConfirmButton = req.nextUrl.searchParams.get('hasConfirmButton') === 'true';
 
   const survey = {
-    accessKey: "",
+    accessKey: "ACCESS_KEY_SURVEY",
     image,
     question,
     leftLabel,
@@ -26,6 +27,7 @@ export async function GET(req: NextRequest) {
     bgColor,
     skipComment,
     thanksMessage,
+    hasConfirmButton
   };
 
   return new NextResponse(
@@ -51,19 +53,57 @@ export async function GET(req: NextRequest) {
           class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
         >
         <div class="mx-auto w-full max-w-lg bg-gradient-to-r h-[252px] rounded-2xl">
-        <div class="step hidden" id="thanks">
+        <div class="flex justify-center mb-3">
+          <!--<img src=${survey.image} alt="" class="w-16 h-16" />  -->
+        </div>
+        <form action="" method="post" id="npsform">
+        <input type="hidden" name="access_key" value=${survey.accessKey}>
+        ${survey.skipComment ? "" : `
+            <div
+              class="step hidden"
+              id="step-comment"
+            >
+              <h2
+                class="mx-auto text-center text-xl font-bold"
+              >
+                ${survey.commentMessage}
+              </h2>
+            <div class="mt-4">
+              <textarea
+                name="comment"
+                rows="3"
+                class="px-1 w-full rounded-md border bg-white  shadow border-gray-400 focus:border-indigo-500"
+              >
+              </textarea>
+            </div>
+          
+            <div class="relative">
+              <a href="#!"
+                class="absolute top-0 left-0 navigate underline text-gray-500 text-sm"
+                data-step="form"
+              >
+                Go back
+              </a>
+            </div>
+
+          <div class="flex justify-center mt-2">
+            <button
+              type="submit"
+              class="navigate px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400" data-step="thanks"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+        `}
+        <div class="step hidden" id="step-thanks">
             <h2 class="mx-auto text-center text-xl font-bold">
               ${survey.thanksMessage}
             </h2>
         </div>
-        <div class="flex justify-center mb-3">
-        <!--<img src=${survey.image} alt="" class="w-16 h-16" />  -->
-        </div>
-        <form action="http://localhost:3000/api/surveys" method="post" id="npsform">
-        <input type="hidden" name="access_key" value=${survey.accessKey}>
-        <div class="step flex flex-col justify-center items-center" id="step1">
+        <div class="step flex flex-col justify-center items-center" id="step-form">
         <h2 class="mx-auto max-w-xs text-center text-xl font-bold">
-        ${survey.question}
+          ${survey.question}
         </h2>
         <div class="mt-4 flex gap-5 justify-center items-center">
           <div class="grow relative">
@@ -73,7 +113,6 @@ export async function GET(req: NextRequest) {
               name="score"
               value="1"
               class="navigate peer hidden"
-              data-step="2"
             />
             <label
               for="one"
@@ -96,7 +135,7 @@ export async function GET(req: NextRequest) {
               id="two"
               name="score"
               value="2"
-              class="navigate peer hidden" data-step="2"
+              class="navigate peer hidden"
             />
             <label
               for="two"
@@ -114,7 +153,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-            <input type="radio" id="three" name="score" value="2" class="navigate peer hidden" data-step="2" />
+            <input type="radio" id="three" name="score" value="3" class="navigate peer hidden" />
             <label for="three" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
@@ -128,7 +167,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-          <input type="radio" id="four" name="score" value="2" class="navigate peer hidden" data-step="2" />
+            <input type="radio" id="four" name="score" value="4" class="navigate peer hidden" />
             <label for="four" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
@@ -142,7 +181,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-            <input type="radio" id="five" name="score" value="2" class="navigate peer hidden" data-step="2" />
+            <input type="radio" id="five" name="score" value="5" class="navigate peer hidden" />
             <label for="five" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
@@ -156,57 +195,17 @@ export async function GET(req: NextRequest) {
           </div>
           </div>
 
-          ${survey.skipComment
+          ${survey.hasConfirmButton
       ? `
-            <div class="flex justify-center mt-2">
-              <button type="submit" class="px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400">
-                Submit
-              </button>
-            </div>
-          `
+              <div class="flex justify-center mt-2">
+                <button type="button" class="navigate px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400">
+                  Confirm
+                </button>
+              </div>
+            `
       : ""
     }
         </div>
-        
-        ${!survey.skipComment
-      ? `
-          <div
-            class="step hidden"
-            id="step2"
-          >
-            <h2
-              class="mx-auto text-center text-xl font-bold">
-              ${survey.commentMessage}
-            </h2>
-          
-            <div class="mt-4">
-              <textarea
-                name="comment"
-                rows="3"
-                class="px-1 w-full rounded-md border bg-white  shadow border-gray-400 focus:border-indigo-500">
-                </textarea>
-            </div>
-          
-            <div class="relative">
-              <a href="#!"
-                class="absolute top-0 left-0 navigate underline text-gray-500 text-sm"
-                data-step="1"
-              >
-                Go back
-              </a>
-          </div>
-
-          <div class="flex justify-center mt-2">
-            <button
-              type="submit"
-              class="px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400"
-            >
-              Submit
-            </button>
-          </div>
-        `
-      : ""
-    } 
         </form>
         </div>
         </div>

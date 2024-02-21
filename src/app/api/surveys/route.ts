@@ -17,11 +17,12 @@ export async function GET(req: NextRequest) {
     skipComment: false,
     textColor: "text-white",
     bgColor: "bg-white",
-    buttonShape: "rounded-md",
+    buttonShape: "rounded-full",
     welcomeMessage: "Can i help us?",
     thanksMessage: "Thanks for your help!",
     hasConfirmButton: true,
   };
+
   return NextResponse.json(survey);
 }
 
@@ -37,13 +38,14 @@ export async function POST(req: NextRequest) {
   const score = form.get("score");
   const comment = form.get("comment");
 
-  if (!accessKey)
-    return NextResponse.json(
-      { success: false, error: "Access key is required" },
-      { status: StatusCodes.UNAUTHORIZED }
-    );
+  console.log({ accessKey, score, comment })
+  // if (!accessKey)
+  //   return NextResponse.json(
+  //     { success: false, error: "Access key is required" },
+  //     { status: StatusCodes.UNAUTHORIZED }
+  //   );
 
-  const result = schema.parse({ accessKey, score, comment });
+  // const result = schema.parse({ accessKey, score, comment });
 
-  return NextResponse.json({ result }, { status: StatusCodes.CREATED });
+  return NextResponse.json({ success: true }, { status: StatusCodes.CREATED });
 }

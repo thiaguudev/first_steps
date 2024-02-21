@@ -44,15 +44,6 @@ export default function RootLayout({
         {/* <Chat />
         <HotJar />
         <Analytics /> */}
-        {/* <iframe
-          id="frame"
-          name="frame"
-          src="http://localhost:3000/api/surveys/template/thumbs"
-          scrolling="no"
-          frameBorder="0"
-          height={350}
-          style={{ width: "100vw", overflow: "hidden" }}
-        /> */}
       </body>
 
       <Script id="scripts" defer>
@@ -65,7 +56,7 @@ export default function RootLayout({
               script.type = 'text/javascript';
               script.async = !0;
               script.defer = true;
-              script.src = 'http://localhost:3000/integrations/v1/script.js'
+              script.src = '/integrations/v1/script.js'
               const p = d.getElementsByTagName('script')[0];
               p.parentNode.insertBefore(script, p);
             }
