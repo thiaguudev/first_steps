@@ -119,52 +119,9 @@ export async function GET() {
       </div>
     </div>
     </body>
-    <script>
-    const form = document.getElementById("npsform");
-
-    /**
-      * Multi-step Function to navigate
-      */
-    
-    const navigateToFormStep = (stepNumber) => {
-      form.querySelectorAll(".step").forEach((el) => {
-        el.classList.add("hidden");
-      });
-    
-      form.querySelector("#step" + stepNumber).classList.remove("hidden");
-    };
-    
-    /**
-      * Enable Navigation buttons
-      */
-    
-    form.querySelectorAll(".navigate").forEach((nav) => {
-      nav.addEventListener("click", () => {
-        const stepNumber = parseInt(nav.getAttribute("data-step"));
-        navigateToFormStep(stepNumber);
-      });
-    });
-    </script>
     </html>
   `,
     { headers: { "content-type": "text/html" } }
   );
 }
 
-/*
- !function(e,t,r,n){
-  if(!e[n]){
-    for(var a=e[n]=[],i=["survey","reset","config","init","set","get","event","identify","track","page","screen","group","alias"],s=0;s<i.length;s++){
-      var c=i[s];a[c]=a[c]||function(e){
-        return function(){
-          var t=Array.prototype.slice.call(arguments);
-          a.push([e,t])}}(c)
-      }
-      a.SNIPPET_VERSION = "1.0.1";
-      var o = t.createElement("script");
-      o.type = "text/javascript",
-      o.async = !0,
-      o.src = "https://d2yyd1h5u9mauk.cloudfront.net/integrations/web/v1/library/" + r + "/" + n + ".js";
-      var p=t.getElementsByTagName("script")[0];
-      p.parentNode.insertBefore(o,p)}}(window,document,"yqJnvhYQAXIDC17Y","delighted");
-*/
