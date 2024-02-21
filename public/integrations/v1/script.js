@@ -1,55 +1,84 @@
-async function track() {
-  const response = await fetch("http://localhost:3000/api/surveys/", {
-    method: "GET",
-  });
+const BASE_URL = "http://localhost:3000";
 
-  const data = await response.json();
-
-  return data
-}
-
-async function main() {
-  const survey = await track()
-  const queryString = new URLSearchParams(survey).toString()
+function __createIframe(queryString) {
   const iframe = window.document.createElement("iframe");
+
   iframe.name = "frame";
-  iframe.src = `http://localhost:3000/api/surveys/template/smileys?${queryString}`;
+  iframe.src = `${BASE_URL}/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
   iframe.frameBorder = "0";
   iframe.height = 350;
   iframe.style.width = "100vw";
   iframe.style.overflow = "hidden";
-  iframe.style.position = 'fixed',
+  iframe.style.position = "absolute";
   iframe.style.left = 0;
   iframe.style.bottom = 0;
   iframe.style.zIndex = 9999;
 
   window.document.body.appendChild(iframe);
 
-  const frame = window.frames["frame"];
+  return window.frames["frame"];
+}
+
+async function __identify() {
+  const response = await fetch(`${BASE_URL}/api/surveys`);
+  const data = await response.json();
+  return data;
+}
+
+async function main() {
+  const survey = await __identify();
+  const href = window.location.href;
+
+  if (survey.validUrl) {
+    if (survey.baseUrl !== href) return;
+  }
+
+  const queryString = new URLSearchParams(survey).toString();
+  const frame = __createIframe(queryString);
 
   frame.addEventListener("DOMContentLoaded", (event) => {
     const form = frame.document.getElementById("npsform");
 
+    frame.document.getElementsByName("score").forEach((el) => {
+      console.log(el);
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      if (survey.skipComment) {
+      }
+    });
+
     /**
-   * Enable Navigation buttons
-   */
+     * Enable navigation buttons
+     */
     form.querySelectorAll(".navigate").forEach((nav) => {
       nav.addEventListener("click", () => {
+        if (survey.hasConfirmButton) return;
+
         const stepNumber = parseInt(nav.getAttribute("data-step"));
         navigateToFormStep(stepNumber);
       });
     });
 
     /**
-   * Multi-step Function to navigate
-   */
+     * Multi-step function to navigate
+     */
     const navigateToFormStep = (stepNumber) => {
       form.querySelectorAll(".step").forEach((el) => {
         el.classList.add("hidden");
       });
-  
-      form.querySelector("#step" + stepNumber).classList.remove("hidden");
+
+      if (!form.querySelector("#step" + stepNumber)) {
+        if (survey.thanksMessage) {
+          const thanks = frame.document.getElementById("thanks");
+          thanks.classList.remove("hidden");
+        }
+      } else {
+        form.querySelector("#step" + stepNumber).classList.remove("hidden");
+      }
     };
   });
 }
