@@ -31,7 +31,7 @@ export async function GET() {
         <div class="flex justify-center mb-3">
           <!--<img src=${survey.image} alt="" class="w-16 h-16" />  -->
         </div>
-        <form action="http://localhost:3000/api/surveys" method="post" id="npsform">
+        <form action="" method="post" id="npsform">
           <input type="hidden" name="access_key" value=${survey.accessKey}>
           <div class="step" id="step1">
             <h2 class="mx-auto max-w-xs text-center text-xl font-bold">

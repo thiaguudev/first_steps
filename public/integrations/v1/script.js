@@ -1,9 +1,7 @@
-const BASE_URL = "http://localhost:3000";
-
 function __createIframe(queryString) {
   const iframe = window.document.createElement("iframe");
   iframe.name = "frame";
-  iframe.src = `${BASE_URL}/api/surveys/template/smileys?${queryString}`;
+  iframe.src = `/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
   iframe.frameBorder = "0";
   iframe.height = 350;
@@ -20,14 +18,14 @@ function __createIframe(queryString) {
 }
 
 async function __send(body) {
-  return fetch(`${BASE_URL}/api/surveys`, {
+  return fetch("/api/surveys", {
     method: "POST",
     body,
   });
 }
 
 async function __identify() {
-  const response = await fetch(`${BASE_URL}/api/surveys`);
+  const response = await fetch("/api/surveys");
   const data = await response.json();
   return data;
 }
