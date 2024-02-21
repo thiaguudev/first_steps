@@ -4,12 +4,14 @@ async function track() {
   });
 
   const data = await response.json();
+
+  return data
 }
 
 async function main() {
   const iframe = window.document.createElement("iframe");
   iframe.name = "frame";
-  iframe.src = "http://localhost:3000/api/surveys/template/smileys";
+  iframe.src = "http://localhost:3000/api/surveys/template/smileys?bgColor=bg-green-500&textColor=text-white";
   iframe.scrolling = "no";
   iframe.frameBorder = "0";
   iframe.height = 350;
@@ -19,10 +21,11 @@ async function main() {
   iframe.style.left = 0;
   iframe.style.bottom = 0;
   iframe.style.zIndex = 9999;
-  iframe.srcdoc = '<h1>Welcome</h1>'
+
   window.document.body.appendChild(iframe);
 
-  console.log('survey', window.survey);
+  const data = await track()
+  console.log(data);
 
   const frame = window.frames["frame"];
 

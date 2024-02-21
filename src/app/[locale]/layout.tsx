@@ -59,7 +59,7 @@ export default function RootLayout({
         {`
           (function (w, d, a, n) {
             if (!w[n]) {
-              w[n] =  {identity:  a };
+              w[n] =  { identity:  a };
               const script = d.createElement('script');
               script.SNIPPET_VERSION = '0.0.1';
               script.type = 'text/javascript';

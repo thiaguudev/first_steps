@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { z } from "zod";
 
 export async function GET(req: NextRequest) {
+  const survey = {}
   return NextResponse.json({ error: false })
 }
 

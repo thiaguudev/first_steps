@@ -1,6 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const bgColor = req.nextUrl.searchParams.get("bgColor");
+  const textColor = req.nextUrl.searchParams.get("textColor");
+
   const survey = {
     accessKey: "",
     image:
@@ -11,9 +14,9 @@ export async function GET() {
     commentMessage: "Can you tell us a bit more about your score?",
     buttonStyle: "outline",
     buttonShape: "rounded-md",
-    textColor: "text-red-500",
-    bgColor: "bg-white",
-    skipComment: false
+    textColor: textColor || "text-red-500",
+    bgColor: bgColor || "bg-white",
+    skipComment: false,
   };
 
   return new NextResponse(
@@ -136,7 +139,6 @@ export async function GET() {
         </body>
         </html>
         `,
-        { headers: { "content-type": "text/html" } }
-        );
-      }
-      
+    { headers: { "content-type": "text/html" } }
+  );
+}
