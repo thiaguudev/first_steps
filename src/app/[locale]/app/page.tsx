@@ -9,4 +9,5 @@ function AppPage() {
   );
 }
 
-export default isAuth<any>(AppPage);
+// export default isAuth<any>(AppPage);
+export default AppPage;
