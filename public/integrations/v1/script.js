@@ -1,24 +1,26 @@
 /**
- * 
+ *
  * @param {String} email
- * @param {String} name 
+ * @param {String} name
  * @returns void
  */
-function survey({ email, name, createdAt, properties: { plan, company } }) {}
+function survey({ email, name, createdAt, properties: { plan, company } }) {
+  const iframe = __getIframe();
+}
 
 /**
- * 
- * @param {*} styles 
- * @param {*} element 
+ *
+ * @param {*} styles
+ * @param {*} element
  */
 function __setOverrideStyle(styles, element) {
   Object.assign(element.style, styles);
 }
 
 /**
- * 
- * @param {String} iframeName 
- * @returns 
+ *
+ * @param {String} iframeName
+ * @returns
  */
 function __getIframe(iframeName) {
   let iframe = window.frames[iframeName];
@@ -26,8 +28,8 @@ function __getIframe(iframeName) {
 }
 
 /**
- * 
- * @param {String} queryString 
+ *
+ * @param {String} queryString
  * @returns object
  */
 function __createIframe(queryString) {
@@ -51,7 +53,12 @@ function __createIframe(queryString) {
     iframe
   );
 
-  iframe.classList.add('transition-all', 'ease-in', 'delay-150', 'duration-500')
+  iframe.classList.add(
+    "transition-all",
+    "ease-in",
+    "delay-150",
+    "duration-500"
+  );
 
   window.document.body.appendChild(iframe);
 
@@ -59,7 +66,7 @@ function __createIframe(queryString) {
 }
 
 /**
- * 
+ *
  * @returns boolean
  */
 function __validateFields() {
@@ -76,8 +83,8 @@ function __validateFields() {
 }
 
 /**
- * 
- * @param {*} body 
+ *
+ * @param {*} body
  * @returns Promise<Response>
  */
 async function __send(body) {
@@ -88,7 +95,7 @@ async function __send(body) {
 }
 
 /**
- * 
+ *
  * @returns Promise<object>
  */
 async function __identify() {
@@ -98,7 +105,7 @@ async function __identify() {
 }
 
 /**
- * 
+ *
  * @returns void
  */
 async function main() {
@@ -153,7 +160,7 @@ async function main() {
       const data = await response.json();
       console.log("result1", data);
       setTimeout(() => {
-        document.getElementById("surveyapoli").classList.add('hidden')
+        document.getElementById("surveyapoli").classList.add("hidden");
         // document.body.removeChild(document.getElementById("surveyapoli"));
       }, 2000);
     });

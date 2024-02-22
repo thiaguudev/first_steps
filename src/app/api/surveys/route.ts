@@ -4,8 +4,8 @@ import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   const survey = {
-    validUrl: false,
-    baseUrl: "http://localhost:3000/en/app/flows",
+    validUrl: true,
+    baseUrl: "http://localhost:3000/en/app",
     timeToShow: 2,
     image:
       "https://www.voxco.com/wp-content/uploads/2021/04/students-feedback-survey-cvr.jpg.webp",
