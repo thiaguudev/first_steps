@@ -1,30 +1,85 @@
+/**
+ * 
+ * @param {String} email
+ * @param {String} name 
+ * @returns void
+ */
+function survey({ email, name, createdAt, properties: { plan, company } }) {}
+
+/**
+ * 
+ * @param {*} styles 
+ * @param {*} element 
+ */
+function __setOverrideStyle(styles, element) {
+  Object.assign(element.style, styles);
+}
+
+/**
+ * 
+ * @param {String} iframeName 
+ * @returns 
+ */
+function __getIframe(iframeName) {
+  let iframe = window.frames[iframeName];
+  return iframe || window.document.createElement("iframe");
+}
+
+/**
+ * 
+ * @param {String} queryString 
+ * @returns object
+ */
 function __createIframe(queryString) {
-  const iframe = window.document.createElement("iframe");
+  const iframe = __getIframe();
   iframe.name = "surveyframe";
   iframe.src = `/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
   iframe.id = "surveyapoli";
   iframe.frameBorder = "0";
   iframe.height = 275;
-  iframe.style.width = "100vw";
-  iframe.style.overflow = "hidden";
-  iframe.style.position = "absolute";
-  iframe.style.left = 0;
-  iframe.style.bottom = 0;
-  iframe.style.zIndex = 9999;
+
+  __setOverrideStyle(
+    {
+      overflow: "hidden",
+      width: "100vw",
+      position: "absolute",
+      left: 0,
+      bottom: 0,
+      zIndex: 9999,
+    },
+    iframe
+  );
+
+  iframe.classList.add('transition-all', 'ease-in', 'delay-150', 'duration-500')
 
   window.document.body.appendChild(iframe);
 
   return window.frames["surveyframe"];
 }
 
+/**
+ * 
+ * @returns boolean
+ */
 function __validateFields() {
-  console.log("items", document.getElementsByClassName("score"));
-  document.getElementsByName("score").forEach((el) => {
-    console.log("el", el);
+  const frame = __getIframe("surveyframe");
+
+  let checked = false;
+
+  frame.document.getElementsByName("score").forEach((el) => {
+    if (!el.checked) return;
+    checked = true;
   });
+
+  return checked;
 }
 
+/**
+ * 
+ * @param {*} body 
+ * @returns Promise<Response>
+ */
 async function __send(body) {
   return fetch("/api/surveys", {
     method: "POST",
@@ -32,12 +87,20 @@ async function __send(body) {
   });
 }
 
+/**
+ * 
+ * @returns Promise<object>
+ */
 async function __identify() {
   const response = await fetch("/api/surveys");
   const data = await response.json();
   return data;
 }
 
+/**
+ * 
+ * @returns void
+ */
 async function main() {
   const survey = await __identify();
   const href = window.location.href;
@@ -89,29 +152,23 @@ async function main() {
       const response = await __send(new FormData(form));
       const data = await response.json();
       console.log("result1", data);
-      frame.setTimeout(
-        () => document.body.removeChild(document.getElementById("surveyapoli")),
-        2000
-      );
+      setTimeout(() => {
+        document.getElementById("surveyapoli").classList.add('hidden')
+        // document.body.removeChild(document.getElementById("surveyapoli"));
+      }, 2000);
     });
 
     /**
      * Enable navigation buttons
      */
+
     form.querySelectorAll(".navigate").forEach((nav) => {
-      nav.addEventListener("click", (event) => {
-        let checked = false;
-
-        form.querySelectorAll(".score").forEach((el) => {
-          if (!el.checked) return;
-          checked = el.checked
-        });
-
-        if (!checked) return;
-
-        const step = nav.getAttribute("data-step");
-        if (!step) return;
-        navigateToFormStep(step);
+      nav.addEventListener("click", () => {
+        if (__validateFields()) {
+          const step = nav.getAttribute("data-step");
+          if (!step) return;
+          navigateToFormStep(step);
+        }
       });
     });
 
