@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
         </head>
         <body>
         <div
-          class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12"
+          class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12 px-5"
         >
         <div class="mx-auto w-full max-w-lg bg-gradient-to-r h-[252px] rounded-2xl">
         <div class="flex justify-center mb-3">
@@ -86,10 +86,10 @@ export async function GET(req: NextRequest) {
               </a>
             </div>
 
-          <div class="flex justify-center mt-2">
+          <div class="flex justify-center mt-5">
             <button
               type="submit"
-              class="navigate px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400" data-step="thanks"
+              class="navigate px-5 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400" data-step="thanks"
             >
               Submit
             </button>
@@ -197,8 +197,8 @@ export async function GET(req: NextRequest) {
 
           ${survey.hasConfirmButton
       ? `
-              <div class="flex justify-center mt-2">
-                <button type="button" class="navigate px-10 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400">
+              <div class="flex justify-center mt-5">
+                <button type="button" class="navigate px-5 py-2 rounded-md border bg-white text-lg font-medium shadow border-gray-400">
                   Confirm
                 </button>
               </div>

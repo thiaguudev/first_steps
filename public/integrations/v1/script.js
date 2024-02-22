@@ -1,10 +1,11 @@
 function __createIframe(queryString) {
   const iframe = window.document.createElement("iframe");
-  iframe.name = "frame";
+  iframe.name = "surveyframe";
   iframe.src = `/api/surveys/template/smileys?${queryString}`;
   iframe.scrolling = "no";
+  iframe.id = "surveyapoli";
   iframe.frameBorder = "0";
-  iframe.height = 350;
+  iframe.height = 275;
   iframe.style.width = "100vw";
   iframe.style.overflow = "hidden";
   iframe.style.position = "absolute";
@@ -14,7 +15,7 @@ function __createIframe(queryString) {
 
   window.document.body.appendChild(iframe);
 
-  return window.frames["frame"];
+  return window.frames["surveyframe"];
 }
 
 async function __send(body) {
@@ -41,7 +42,7 @@ async function main() {
   const queryString = new URLSearchParams(survey).toString();
   const frame = __createIframe(queryString);
 
-  frame.addEventListener("DOMContentLoaded", (event) => {
+  frame.addEventListener("DOMContentLoaded", () => {
     const form = frame.document.getElementById("npsform");
 
     if (survey.hasConfirmButton) {
@@ -64,6 +65,13 @@ async function main() {
             const response = await __send(new FormData(form));
             const data = await response.json();
             console.log("result2", data);
+            frame.setTimeout(
+              () =>
+                document.body.removeChild(
+                  document.getElementById("surveyapoli")
+                ),
+              2000
+            );
           });
         });
       }
@@ -74,6 +82,10 @@ async function main() {
       const response = await __send(new FormData(form));
       const data = await response.json();
       console.log("result1", data);
+      frame.setTimeout(
+        () => document.body.removeChild(document.getElementById("surveyapoli")),
+        2000
+      );
     });
 
     /**
