@@ -1,3 +1,3 @@
 export default function IntegrationsPage() {
-  return <div />;
+  return <div>Integrations</div>;
 }

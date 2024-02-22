@@ -1,3 +1,3 @@
 export default async function FlowsPage() {
-  return <div />;
+  return <div>Flows</div>;
 }
