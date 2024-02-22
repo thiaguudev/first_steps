@@ -60,7 +60,7 @@ export default function RootLayout({
               const p = d.getElementsByTagName('script')[0];
               p.parentNode.insertBefore(script, p);
             }
-          })(window, document, '123456789', 'survey')
+          })(window, document, '123456789', 'surveyapoli')
         `}
       </Script>
     </html>

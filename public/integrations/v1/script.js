@@ -18,6 +18,13 @@ function __createIframe(queryString) {
   return window.frames["surveyframe"];
 }
 
+function __validateFields() {
+  console.log("items", document.getElementsByClassName("score"));
+  document.getElementsByName("score").forEach((el) => {
+    console.log("el", el);
+  });
+}
+
 async function __send(body) {
   return fetch("/api/surveys", {
     method: "POST",
@@ -92,7 +99,16 @@ async function main() {
      * Enable navigation buttons
      */
     form.querySelectorAll(".navigate").forEach((nav) => {
-      nav.addEventListener("click", () => {
+      nav.addEventListener("click", (event) => {
+        let checked = false;
+
+        form.querySelectorAll(".score").forEach((el) => {
+          if (!el.checked) return;
+          checked = el.checked
+        });
+
+        if (!checked) return;
+
         const step = nav.getAttribute("data-step");
         if (!step) return;
         navigateToFormStep(step);

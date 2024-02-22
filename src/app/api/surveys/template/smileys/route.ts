@@ -112,7 +112,7 @@ export async function GET(req: NextRequest) {
               id="one"
               name="score"
               value="1"
-              class="navigate peer hidden"
+              class="score navigate peer hidden"
             />
             <label
               for="one"
@@ -135,7 +135,7 @@ export async function GET(req: NextRequest) {
               id="two"
               name="score"
               value="2"
-              class="navigate peer hidden"
+              class="score navigate peer hidden"
             />
             <label
               for="two"
@@ -153,7 +153,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-            <input type="radio" id="three" name="score" value="3" class="navigate peer hidden" />
+            <input type="radio" id="three" name="score" value="3" class="score navigate peer hidden" />
             <label for="three" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
@@ -167,7 +167,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-            <input type="radio" id="four" name="score" value="4" class="navigate peer hidden" />
+            <input type="radio" id="four" name="score" value="4" class="score navigate peer hidden" />
             <label for="four" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
@@ -181,7 +181,7 @@ export async function GET(req: NextRequest) {
           </div>
         
           <div class="grow">
-            <input type="radio" id="five" name="score" value="5" class="navigate peer hidden" />
+            <input type="radio" id="five" name="score" value="5" class="score navigate peer hidden" />
             <label for="five" class="${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
