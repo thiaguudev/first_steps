@@ -1,29 +1,18 @@
 "use client";
 
+import React from "react";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import { localeNames, locales, usePathname, useRouter } from "@/navigation";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import Image from "next/image";
 import { Locale } from "@/lib/types";
-import React from "react";
 
 export default function LanguageSwitcher() {
   const router = useRouter();
@@ -41,7 +30,7 @@ export default function LanguageSwitcher() {
   });
 
   return (
-    <NavigationMenu>
+    <NavigationMenu className="w-[160px]">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="hover:bg-none">

@@ -52,15 +52,14 @@
 
 - 1 user
 - 50 responses/month
-
 - Channels: Web, Link/QrCode and SMS
 
 ## starter (R$ 47)
 
 - 1 user
 - 100 responses/month
-- customize survey
-- integrations
+- Customize survey
+- Integrations
 - Channels: Web, Link/QrCode and SMS
 - 1 Widget Feedback
 - 3 Flows
@@ -69,7 +68,7 @@
 
 - 3 users
 - 500 responses/month
-- customize survey
+- Customize survey
 - integrations
 - Channels: Web, Link/QrCode and SMS
 - Unlimited Widget Feedback
@@ -79,11 +78,12 @@
 
 - 10 users
 - 1000 responses/month
-- customize survey
-- integrations
+- Customize survey
+- Integrations
 - Channels: Web, Link/QrCode and SMS
 - Unlimited Widget Feedback
 - Unlimited Flow
+- Track Geography
 
 ## business
 
