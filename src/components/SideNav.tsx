@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Link } from "@/navigation";
 import { DashboardIcon } from "@radix-ui/react-icons";
 import {
@@ -12,10 +13,11 @@ import {
   LogOut,
   ArrowLeftCircle,
 } from "lucide-react";
-import { useState } from "react";
+import Image from "next/image";
 
 export default function SideNav() {
   const [open, setOpen] = useState<boolean>(false);
+
   const menus = [
     { title: "Dashboard", icon: <Home />, url: "/" },
     { title: "Surveys", icon: <Megaphone />, url: "/app/surveys" },
@@ -28,10 +30,19 @@ export default function SideNav() {
 
   return (
     <div
-      className={`bg-slate-100 h-screen p-5 pt-8 relative ${
-        open ? "w-52" : "w-16"
+      className={`bg-white h-screen p-5 pt-8 relative ${
+        open ? "w-60" : "w-16"
       }`}
     >
+      <div className="flex justify-center items-center">
+        <Image
+          src="/logo.png"
+          alt="Logo Survey Apoli"
+          width={129}
+          height={27}
+        />
+      </div>
+
       <ArrowLeftCircle
         onClick={handleOnCollapse}
         className={`bg-white text-3xl rounded-full absolute -right-3 top-9 border border-solid cursor-pointer ${

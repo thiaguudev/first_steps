@@ -9,8 +9,8 @@ import Chat from "@/components/Chat";
 import HotJar from "@/components/HotJar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import SessionProvider from "@/components/SessionProvider";
-import "../globals.css";
 import Script from "next/script";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: siteConfig.title,
@@ -46,7 +46,7 @@ export default function RootLayout({
         <Analytics /> */}
       </body>
 
-      <Script id="scripts" defer>
+      {/* <Script id="scripts" defer>
         {`
           (function (w, d, a, n) {
             if (!w[n]) {
@@ -62,7 +62,7 @@ export default function RootLayout({
             }
           })(window, document, '123456789', 'surveyapoli')
         `}
-      </Script>
+      </Script> */}
     </html>
   );
 }

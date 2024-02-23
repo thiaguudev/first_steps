@@ -1,6 +1,24 @@
 /**
- * @param {String} email
- * @param {String} name
+ * @param {string} name
+ */
+function __getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  return parts.length === 2 ? parts.pop().split(";").shift() : "";
+}
+
+function __identify() {
+  const cookie = __getCookie("survey_user_identify");
+  return cookie;
+}
+
+function __detectMobile() {
+  return true;
+}
+
+/**
+ * @param {string} email
+ * @param {string} name
  * @returns void
  */
 function survey({ email, name, createdAt, properties: { plan, company } }) {
@@ -8,8 +26,8 @@ function survey({ email, name, createdAt, properties: { plan, company } }) {
 }
 
 /**
- * @param {*} styles
- * @param {*} element
+ * @param {object} styles
+ * @param {object} element
  */
 function __setOverrideStyle(styles, element) {
   Object.assign(element.style, styles);
@@ -47,8 +65,8 @@ function __createIframe(queryString) {
       bottom: 0,
       zIndex: 99999,
       opacity: 0,
-      transform: 'translateY(130%)',
-      display: 'none'
+      transform: "translateY(130%)",
+      display: "none",
     },
     iframe
   );
@@ -98,7 +116,7 @@ async function __send(body) {
 /**
  * @returns Promise<object>
  */
-async function __identify() {
+async function __fetch() {
   const response = await fetch("/api/surveys");
   const data = await response.json();
   return data;
@@ -108,7 +126,7 @@ async function __identify() {
  * @returns void
  */
 async function main() {
-  const survey = await __identify();
+  const survey = await __fetch();
   const href = window.location.href;
 
   if (survey.validUrl) {
@@ -126,8 +144,7 @@ async function main() {
       },
       document.getElementById("surveyapoli")
     );
-  }, survey.timeToShow * 1000)
-  
+  }, survey.timeToShow * 1000);
 
   frame.addEventListener("DOMContentLoaded", () => {
     const form = frame.document.getElementById("npsform");
