@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export async function GET(req: NextRequest) {
   const survey = {
-    validUrl: true,
+    validUrl: false,
     baseUrl: "http://localhost:3000/en/app",
     timeToShow: 2,
     image:

@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
             />
             <label
               for="one"
-              class="${survey.bgColor} ${survey.textColor
+              class="hover:scale-125 duration-200 ${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500"
             >
@@ -139,7 +139,7 @@ export async function GET(req: NextRequest) {
             />
             <label
               for="two"
-              class="${survey.textColor} ${survey.bgColor
+              class="hover:scale-125 duration-200 ${survey.textColor} ${survey.bgColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500"
             >
@@ -154,7 +154,7 @@ export async function GET(req: NextRequest) {
         
           <div class="grow">
             <input type="radio" id="three" name="score" value="3" class="score navigate peer hidden" />
-            <label for="three" class="${survey.bgColor} ${survey.textColor
+            <label for="three" class="hover:scale-125 duration-200 ${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -168,7 +168,7 @@ export async function GET(req: NextRequest) {
         
           <div class="grow">
             <input type="radio" id="four" name="score" value="4" class="score navigate peer hidden" />
-            <label for="four" class="${survey.bgColor} ${survey.textColor
+            <label for="four" class="hover:scale-125 duration-200 ${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -182,7 +182,7 @@ export async function GET(req: NextRequest) {
         
           <div class="grow">
             <input type="radio" id="five" name="score" value="5" class="score navigate peer hidden" />
-            <label for="five" class="${survey.bgColor} ${survey.textColor
+            <label for="five" class="hover:scale-125 duration-200 ${survey.bgColor} ${survey.textColor
     } flex h-10 w-10 cursor-pointer items-center justify-center ${survey.buttonShape
     } border text-lg font-medium shadow hover:border-gray-400 peer-checked:border-indigo-500 peer-checked:text-indigo-500">
               <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

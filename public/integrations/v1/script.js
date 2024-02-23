@@ -1,5 +1,4 @@
 /**
- *
  * @param {String} email
  * @param {String} name
  * @returns void
@@ -9,7 +8,6 @@ function survey({ email, name, createdAt, properties: { plan, company } }) {
 }
 
 /**
- *
  * @param {*} styles
  * @param {*} element
  */
@@ -18,9 +16,8 @@ function __setOverrideStyle(styles, element) {
 }
 
 /**
- *
  * @param {String} iframeName
- * @returns
+ * @returns object
  */
 function __getIframe(iframeName) {
   let iframe = window.frames[iframeName];
@@ -28,7 +25,6 @@ function __getIframe(iframeName) {
 }
 
 /**
- *
  * @param {String} queryString
  * @returns object
  */
@@ -40,6 +36,7 @@ function __createIframe(queryString) {
   iframe.id = "surveyapoli";
   iframe.frameBorder = "0";
   iframe.height = 275;
+  iframe.opacity = 0;
 
   __setOverrideStyle(
     {
@@ -48,17 +45,23 @@ function __createIframe(queryString) {
       position: "absolute",
       left: 0,
       bottom: 0,
-      zIndex: 9999,
+      zIndex: 99999,
+      opacity: 0,
+      transform: 'translateY(130%)',
+      display: 'none'
     },
     iframe
   );
 
-  iframe.classList.add(
-    "transition-all",
-    "ease-in",
-    "delay-150",
-    "duration-500"
-  );
+  // iframe.classList.add(
+  //   "transition-all",
+  //   "ease-in",
+  //   "duration-1000",
+  //   "opacity-0",
+  //   "hidden",
+  //   "ease-in",
+  //   // 'animate-pulse'
+  // );
 
   window.document.body.appendChild(iframe);
 
@@ -66,7 +69,6 @@ function __createIframe(queryString) {
 }
 
 /**
- *
  * @returns boolean
  */
 function __validateFields() {
@@ -83,7 +85,6 @@ function __validateFields() {
 }
 
 /**
- *
  * @param {*} body
  * @returns Promise<Response>
  */
@@ -95,7 +96,6 @@ async function __send(body) {
 }
 
 /**
- *
  * @returns Promise<object>
  */
 async function __identify() {
@@ -105,7 +105,6 @@ async function __identify() {
 }
 
 /**
- *
  * @returns void
  */
 async function main() {
@@ -118,6 +117,17 @@ async function main() {
 
   const queryString = new URLSearchParams(survey).toString();
   const frame = __createIframe(queryString);
+
+  setTimeout(() => {
+    __setOverrideStyle(
+      {
+        opacity: 100,
+        display: "block",
+      },
+      document.getElementById("surveyapoli")
+    );
+  }, survey.timeToShow * 1000)
+  
 
   frame.addEventListener("DOMContentLoaded", () => {
     const form = frame.document.getElementById("npsform");
@@ -144,9 +154,12 @@ async function main() {
             console.log("result2", data);
             frame.setTimeout(
               () =>
-                document.body.removeChild(
-                  document.getElementById("surveyapoli")
-                ),
+                // document.body.removeChild(
+                //   document.getElementById("surveyapoli")
+                // ),
+                document
+                  .getElementById("surveyapoli")
+                  .classList.add("hidden", "opacity-0"),
               2000
             );
           });
@@ -160,7 +173,9 @@ async function main() {
       const data = await response.json();
       console.log("result1", data);
       setTimeout(() => {
-        document.getElementById("surveyapoli").classList.add("hidden");
+        document
+          .getElementById("surveyapoli")
+          .classList.add("hidden", "opacity-0");
         // document.body.removeChild(document.getElementById("surveyapoli"));
       }, 2000);
     });
